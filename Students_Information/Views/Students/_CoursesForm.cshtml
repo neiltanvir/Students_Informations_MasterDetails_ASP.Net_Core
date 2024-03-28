@@ -1,0 +1,18 @@
+﻿@model Course
+<tr>
+    <td>
+        <input asp-for="CourseName" class="form-control form-control-sm" />
+        <span class="text-danger" asp-validation-for="CourseName"></span>
+    </td>
+    <td>
+        <input type="text" asp-for="CourseFee" class="form-control form-control-sm" />
+        <span class="text-danger" asp-validation-for="CourseFee"></span>
+    </td>
+    <td>
+        <input type="date" asp-for="AdmissionDate" class="form-control form-control-sm" />
+        <span class="text-danger" asp-validation-for="AdmissionDate"></span>
+    </td>
+    <td>
+        <button type="button" class="btn btn-danger btn-sm del"><i class="bi bi-x-square"></i> Remove</button>
+    </td>
+</tr>

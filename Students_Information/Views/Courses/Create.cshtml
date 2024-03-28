@@ -1,0 +1,47 @@
+﻿@model Course
+@{
+    ViewData["Title"] = "Create";
+}
+<div class="row">
+    <div class="col-12">
+        <form asp-action="Create" asp-controller="Courses" method="post">
+            <h3 class="text-center">Add new Courses</h3>
+            <input type="hidden" asp-for="StudentId" value="@ViewBag.StudentId" />
+            <div class="form-group row mb-1">
+                <label class="col-form-label col-2" asp-for="CourseName"></label>
+                <div class="col-6">
+                    <input  asp-for="CourseName" class="form-control" />
+                    <span asp-validation-for="CourseName" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="form-group row mb-1">
+                <label class="col-form-label col-2" asp-for="CourseFee"></label>
+                <div class="col-6">
+                    <input type="text" asp-for="CourseFee" class="form-control" />
+                    <span asp-validation-for="CourseFee" class="text-danger"></span>
+                </div>
+            </div>          
+            <div class="form-group row mb-1">
+                <label class="col-form-label col-2" asp-for="AdmissionDate"></label>
+                <div class="col-6">
+                    <input type="date" asp-for="AdmissionDate" class="form-control" />
+                    <span asp-validation-for="AdmissionDate" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="form-group row mb-1">
+
+                <div class="col-6 offset-2">
+                    <button type="submit" class="btn btn-primary">Save</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+@section scripts
+    {
+    <script src="~/libs/jquery/jquery.js"></script>
+    <script src="~/libs/jquery-validate/jquery.validate.js"></script>
+    <script src="~/libs/jquery-validate/jquery.validate.unobtrusive.js"></script>
+}
+
+

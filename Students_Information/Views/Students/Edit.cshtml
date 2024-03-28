@@ -1,0 +1,71 @@
+﻿@model StudentEditModel
+@{
+    ViewData["Title"] = "Edit";
+}
+
+<div class="row">
+    <div class="col-12">
+        <form asp-action="Edit" asp-controller="Students" method="post" enctype="multipart/form-data">
+            <h3 class="text-center">Edit Student</h3>
+            <input type="hidden" asp-for="StudentId" />
+            <div class="form-group row mb-1">
+                <label class="col-form-label col-2" asp-for="StudentName"></label>
+                <div class="col-6">
+                    <input asp-for="StudentName" class="form-control" />
+                    <span asp-validation-for="StudentName" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="form-group row mb-1">
+                <label class="col-form-label col-2" asp-for="Age"></label>
+                <div class="col-6">
+                    <input type="text" asp-for="Age" class="form-control" />
+                    <span asp-validation-for="Age" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="form-group row mb-1">
+                <label class="col-form-label col-2" asp-for="Gender"></label>
+                <div class="col-6">
+                    <select class="form-select" asp-for="Gender" asp-items="@Html.GetEnumSelectList<Gender>()">
+                        <option value="" selected>Select one</option>
+                    </select>
+                    <span asp-validation-for="Gender" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="form-group row mb-1">
+                <label class="col-form-label col-2" asp-for="Picture"></label>
+                <div class="col-6">
+                    <input type="file" asp-for="Picture" class="form-control" />
+                    <span asp-validation-for="Picture" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="form-group row mb-1">
+
+                <div class="col-6 offset-2">
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" asp-for="IsRegular">
+                        <label class="form-check-label">
+                            Is Regular?
+                        </label>
+                    </div>
+
+                </div>
+            </div>
+            <div class="form-group row mb-1">
+
+                <div class="col-6 offset-2">
+                    <button type="submit" class="btn btn-primary">Save</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+@section styles
+    {
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+}
+@section scripts
+    {
+    <script src="~/libs/jquery/jquery.js"></script>
+    <script src="~/libs/jquery-validate/jquery.validate.js"></script>
+    <script src="~/libs/jquery-validate/jquery.validate.unobtrusive.js"></script>
+}

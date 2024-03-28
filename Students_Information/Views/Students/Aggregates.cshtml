@@ -1,0 +1,39 @@
+﻿@model  IEnumerable<Course>
+@{
+    ViewData["Title"] = "Aggregates";
+}
+<div class="row">
+    <div class="col-12">
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th>Function</th>
+                    <th>Value</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Count</td>
+                    <td>@Model.Count()</td>
+                </tr>
+                <tr>
+                    <td>Min (qty)</td>
+                    <td>@Model.Min(x=> x.CourseFee)</td>
+                </tr>
+                <tr>
+                    <td>Max (qty)</td>
+                    <td>@Model.Max(x=> x.CourseFee)</td>
+                </tr>
+                <tr>
+                    <td>Sum (qty, price)</td>
+                    <td>@Model.Sum(x=> x.CourseFee), Total Value: @Model.Sum(x=> x.CourseFee*x.Student?.StudentId)</td>
+                </tr>
+                <tr>
+                    <td>Avg (qty, price)</td>
+                    <td>@Model.Average(x=> x.CourseFee), Total Value: @Model.Average(x=> x.Student?.StudentId)</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+

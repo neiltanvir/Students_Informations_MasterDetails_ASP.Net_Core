@@ -1,0 +1,150 @@
+﻿@model IEnumerable<Student>
+@using X.PagedList
+@using X.PagedList.Mvc.Core;
+@using X.PagedList.Web.Common
+@{
+    ViewData["Title"] = "Index";
+}
+
+<div class="row">
+    <div class="col-12">
+        <h3 class="text-center">Students</h3>
+        <div class="d-flex justify-content-end mb-1">
+            <a class="btn btn-primary btn-sm" asp-action="Create" asp-controller="Students"><i class="bi bi-file-earmark-plus"></i> Add New</a>
+        </div>
+        <table class="table table-bordered">
+            <thead class="text-center">
+                <tr>
+                    <th><i class="bi bi-chevron-bar-expand"></i></th>
+                    <th>Photo</th>
+                    <th>Student Name</th>
+                    <th>Age</th>
+                    <th>Gender</th>
+                    <th>--</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var p in Model)
+                {
+                    <tr>
+                        <td class="text-center" style="width:50px">
+                            <button type="button" class="btn btn-outline-secondary btn-sm show-inventory"><i class="bi bi-chevron-right"></i></button>
+                            <button type="button" class="btn btn-outline-secondary btn-sm hide-inventory" style="display:none"><i class="bi bi-chevron-down"></i></button>
+                        </td>
+                        <td><img src="~/Pictures/@p.Picture" class="rounded-circle" style="width:40px;" /></td>
+                        <td>@p.StudentName</td>
+                        <td>@p.Age</td>
+                        <td>@p.Gender</td>
+                        <td>
+                            <a class="btn btn-success btn-sm" asp-action="Edit" asp-controller="Students" asp-route-id="@p.StudentId"><i class="bi bi-pencil-square"></i> Edit</a>
+                            <button data-pk="@p.StudentId" type="button" class="btn btn-danger btn-sm del"><i class="bi bi-trash3-fill"></i> Delete</button>
+                        </td>
+                    </tr>
+                    <tr style="display:none">
+                        <td class="border-end-0"></td>
+                        <td colspan="5">
+                            <h4 class="text-center bg-primary">Courses</h4>
+                            <table class="table table-bordered">
+                                <thead>
+                                    <tr>
+                                        <th>Course Name</th>
+                                        <th>Course Fee</th>
+                                        <th>Admission Date</th>
+                                        <th>
+                                            <a asp-action="Create" asp-controller="Courses" asp-route-id="@p.StudentId" class="btn btn-primary btn-sm"><i class="bi bi-file-earmark-plus"></i> Add</a>
+                                        </th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach(var s in p.Courses)
+                                    {
+                                        <tr>
+                                            <td>@s.CourseName</td>
+                                            <td>@s.CourseFee</td>
+                                            <td>@s.AdmissionDate?.ToString("yyyy-mm-dd")</td>
+                                            <th>
+                                                <a class="btn btn-outline-success btn-sm" asp-action="Edit" asp-controller="Courses" asp-route-id="@s.CourseId">Edit</a>
+                                                <button data-pk="@s.CourseId" type="button" class="btn btn-outline-danger btn-sm dels">Delete</button>
+                                            </th>
+                                        </tr>
+                                    }
+                                </tbody>
+                            </table>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+        <div class="d-flex justify-content-center">
+            @Html.PagedListPager((IPagedList)Model, pg => Url.Action("Index", new { pg}), new PagedListRenderOptions
+            {
+            UlElementClasses = new string[] {"pagination", "pagination-sm"},
+            LiElementClasses = new string[] { "page-item" },
+            PageClasses = new string[] { "page-link" },
+            DisplayLinkToPreviousPage = PagedListDisplayMode.Always,
+            DisplayLinkToNextPage = PagedListDisplayMode.Always
+
+            })
+        </div>
+    </div>
+</div>
+@section styles
+    {
+    <link href="~/libs/icons/font/bootstrap-icons.css" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+}
+@section scripts
+    {
+    <script src="~/libs/jquery/jquery.js"></script>
+    <script>
+        $(".del").click(function () {
+            if (!confirm('Are you sure to delete?')) return;
+            var btn = $(this);
+            let id = $(this).data("pk");
+            $.ajax({
+                type: "post",
+                url: "/Students/Delete/" + id,
+                dataType: "json",
+                success: r => {
+                    if (r.success == true) {
+                        var ptr = btn.closest("tr");
+                        var str = ptr.next();
+                        ptr.remove();
+                        str.remove();
+                    }
+                }
+            })
+        })
+        $(".dels").click(function () {
+            if (!confirm('Are you sure to delete?')) return;
+            var btn = $(this);
+            let id = $(this).data("pk");
+            $.ajax({
+                type: "post",
+                url: "/Courses/Delete/" + id,
+                dataType: "json",
+                success: r => {
+                    if (r.success == true) {
+                        var ptr = btn.closest("tr");
+                        
+                        ptr.remove();
+                       
+                    }
+                }
+            })
+        });
+        $(".show-inventory").click(function () {
+            $(this).closest("tr").next().toggle();
+            $(this).toggle();
+            $(this).next().toggle();
+        });
+        $(".hide-inventory").click(function () {
+            $(this).closest("tr").next().toggle();
+            $(this).toggle();
+            $(this).prev().toggle();
+        });
+    </script>
+}
+
+
+

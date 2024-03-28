@@ -1,0 +1,51 @@
+﻿@model IEnumerable<GroupedData>
+
+@{
+    ViewData["Title"] = "GroupingResult";
+}
+
+<div class="row">
+    <div class="col-12">
+        <h3 class="text-center">Result</h3>
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th>Key</th>
+                    <th>Data</th>
+                </tr>
+
+            </thead>
+            <tbody>
+                @foreach (var x in Model)
+                {
+                    <tr>
+                        <td>
+                            @x.Key
+                        </td>
+                        <td>
+                            <table class="table table-bordered">
+                                <thead>
+                                    <tr>
+                                        <th>Course Fee</th>
+                                        <th>Admission Date</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach (var s in x.Data)
+                                    {
+                                        <tr>
+                                            <td>@s.CourseFee</td>
+                                            <td>@s.AdmissionDate?.ToString("yyyy-MM-dd")</td>
+                                        </tr>
+                                    }
+                                </tbody>
+                            </table>
+                        </td>
+                    </tr>
+                }
+
+            </tbody>
+        </table>
+    </div>
+</div>
+

@@ -1,0 +1,52 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>@ViewBag.Title</title>
+    <link href="~/libs/bootstrap/css/bootstrap.css" rel="stylesheet" />
+    <script src="~/libs/bootstrap/js/bootstrap.bundle.js"></script>
+    <style>
+        body {
+            padding-top: 70px;
+        }
+
+        .main {
+            min-height: 460px;
+        }
+    </style>
+    @await RenderSectionAsync("styles", false)
+</head>
+<body>
+    <navbar class="navbar bg-light navbar-expand-md fixed-top shadow-sm px-2">
+        <div class="container-fluid">
+            <span class="navbar-brand" style="font-family:cursive">Students Information</span>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#nv" aria-controls="nv" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="navbar-collapse" id="nv">
+                <ul class="navbar-nav  ms-auto">
+                    <li class="nav-item">
+                        <a asp-action="Index" asp-controller="Home" class="nav-link">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" asp-controller="Students" asp-action="Aggregates">Aggregates</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" asp-controller="Students" asp-action="Grouping">Grouping</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" asp-controller="Students" asp-action="Index">Students</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </navbar>
+    <main class="container-fluid main">
+        @RenderBody()
+    </main>
+    <footer class="container-fluid">
+        &copy; @DateTime.Today.Year
+    </footer>
+    @await RenderSectionAsync("scripts", false)
+</body>
+</html>
